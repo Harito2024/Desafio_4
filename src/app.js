@@ -5,6 +5,7 @@ const handlebars = require('express-handlebars')
 const productsRouter = require('./routes/product.router.js')
 const cartsRouter = require('./routes/carts.router.js')
 const viewsRouter = require('./routes/views.routes.js')
+//importar "Server"
 const {Server} = require('socket.io')
 const httpServer = app.listen(PORT, ()=>console.log(`Servidor el puerto: ${PORT}`));
 const ProductManager = require('./productManager.js')
@@ -30,8 +31,9 @@ app.use('/', viewsRouter)
 
 socketServer.on('connection', (socket) => {
     console.log('Nuevo cliente conectado')
+
     socket.on('mensaje', (data)=>{
-        console.log(`Mensaje recibido ${data}`)
+        console.log(`Mensaje recibido desde el front ${data}`)
         socketServer.emit('mensaje', data)
 
     })
