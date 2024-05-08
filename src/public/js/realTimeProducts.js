@@ -1,41 +1,54 @@
 const socket = io();
-const divListaProductos = document.getElementById('listaProductos');
+const divListProducts = document.getElementById('listProducts');
 const mensaje = document.createElement('p');
 const btnEnviar = document.getElementById('btnEnviar');
 
 //btnEliminar.addEventListener('click')
 
 btnEnviar.addEventListener('click', () => {
-    const title = document.getElementById('title').value;
+    const title = document.getElementById('title').value
+    const description = document.getElementById('description').value
+    const price = document.getElementById('price').value 
+    const thumbnail = document.getElementById('thumbnail').value
+    const code = document.getElementById('code').value
+    const stock = document.getElementById('stock').value
+    const status = document.getElementById('status').value;
+    const category = document.getElementById('category').value;
+    
+    socket.emit('newProduct', {title, description, price, thumbnail, code, stock, status, category})
+
+    /* const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
     const price = document.getElementById('price').value;
     const code = document.getElementById('code').value;
     const stock = document.getElementById('stock').value;
-    socket.emit('nuevoProducto', {title, description, price, code, stock});
+    socket.emit('nuevoProducto', {title, description, price, code, stock}); */
 })
 
-socket.on('productos', productos => {
-    divListaProductos.innerHTML = ``;
-    productos.forEach(producto => {
+socket.on('products', products => {
+    divListProducts.innerHTML = ``;
+    products.forEach(product => {
         const p = document.createElement('p');
-        const btnEliminar = document.createElement('button');
+        const btnBorrar = document.createElement('button');
 
-        btnEliminar.innerHTML = 'Eliminar';
-        btnEliminar.addEventListener('click', () => {socket.emit('eliminarProducto', producto.id)});
+        btnBorrar.innerHTML = 'Eliminar';
+        btnBorrar.addEventListener('click', () => {
+            socket.emit('eliminarProducto', product.id)
+        });
         p.innerHTML = `<strong>Title: </strong>${producto.title}, <strong>Description: </strong>${producto.description},
-        <strong>Price: </strong>${producto.price}, <strong>Code: </strong>${producto.code},
-        <strong>Stock: </strong>${producto.stock}`;
-        divListaProductos.appendChild(p);
-        divListaProductos.appendChild(btnEliminar);
+        <strong>Price: </strong>${product.price}, <strong>Code: </strong>${product.code},
+        <strong>Stock: </strong>${product.stock}`;
+        divListProducts.appendChild(p);
+        divListProducts.appendChild(btnBorrar);
     });
 })
 
-socket.on('respuestaAdd', mensajeRespuesta => {
+socket.on('resAdd', mensajeRespuesta => {
     mensaje.innerHTML = `<strong>${mensajeRespuesta}</strong>`;
-    divListaProductos.appendChild(mensaje);
+    divListProducts.appendChild(mensaje);
 })
 
-socket.on('respuestaDelete', mensajeRespuesta => {
+socket.on('resDelete', mensajeRespuesta => {
     mensaje.innerHTML = `<strong>${mensajeRespuesta}</strong>`;
-    divListaProductos.appendChild(mensaje);
+    divListProducts.appendChild(mensaje);
 })

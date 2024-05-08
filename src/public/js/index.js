@@ -1,7 +1,14 @@
 /* Le da funcionalidad al Front  index.handlebars*/
 
 const socket = io()
-function enviarMensaje(){
+
+socket.emit('message', 'Comunicacion desde el Front')
+socket.on('individual', data =>{
+    console.log(data)
+})
+
+
+/* function enviarMensaje(){
     const mensaje = document.getElementById('mensaje').value
     socket.emit('mensaje', mensaje)
 }
@@ -13,5 +20,5 @@ boton.addEventListener('click', ()=>{
 
 socket.on('mensaje', (data)=>{
     console.log(`Mensaje recibido desde el servidor ${data}`)
-})
+}) */
 

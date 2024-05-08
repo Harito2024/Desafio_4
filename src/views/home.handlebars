@@ -1,0 +1,27 @@
+{{!-- Este es el front (Cliente) --}}
+
+<div>
+    {{#if length}}
+    <div>
+        <h1>Productos:</h1>
+        <ul>
+            {{#each products}}
+            <li>
+                <strong class="info">Title:</strong>{{this.title}}
+                <strong class="info">Description:</strong>{{this.description}}
+                <strong class="info">Price:</strong> ${{this.price}}
+                <strong class="info">Stock: </strong>{{this.stock}}
+                <strong class="info">Thumbnail: </strong>
+            </li>
+            </br>
+            {{/each}}
+        </ul>
+    </div>
+    {{else}}
+    <h1>No hay productos</h1>
+    {{/if}}
+</div>
+
+<script src='socket.io/socket.io.js'></script>
+{{!-- el script siguiente es donde se da la funcionalidad al front --}}
+<script src="../public/js/index.js"></script>
